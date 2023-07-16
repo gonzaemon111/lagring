@@ -10,8 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 0) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_16_140342) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "domains", comment: "ドメイン", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "ユーザーID"
+    t.string "name", comment: "ドメイン名"
+    t.string "provider", comment: "プロバイダ"
+    t.datetime "next_updated_at", comment: "更新予定日"
+    t.string "account_name", comment: "アカウント名"
+    t.boolean "is_canceled", comment: "解約済み"
+    t.text "memo", comment: "メモ"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_domains_on_user_id"
+  end
+
+  create_table "users", comment: "ユーザーID", force: :cascade do |t|
+    t.string "provider", comment: "プロバイダ"
+    t.string "name", comment: "ユーザー名"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "domains", "users"
 end
