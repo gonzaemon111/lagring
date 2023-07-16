@@ -1,0 +1,25 @@
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "css.lint.unknownAtRules": "ignore",
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "[ruby]": {
+    "editor.formatOnSave": true
+  },
+  "editor.formatOnSave": true,
+  "files.associations": {
+    "*.erb": "html"
+  },
+  "ruby.useBundler": true,
+  "ruby.useLanguageServer": true,
+  "ruby.lint": {
+    "rubocop": {
+      "useBundler": true,
+      "except": ["Metrics"] // because it is annoying that it puts wavy lines to all lines in those methods
+    },
+    "reek": true
+  },
+  "ruby.format": "rubocop",
+  "solargraph.autoformat": true,
+  "cSpell.words": ["rubocop", "reek", "gtag", "lagring", "qiita", "rspec"]
+}

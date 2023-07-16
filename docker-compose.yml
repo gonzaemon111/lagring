@@ -1,0 +1,19 @@
+version: '3'
+services:
+  postgres:
+    image: postgres
+    ports:
+      - "7878:5432"
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: 'lagring'
+      POSTGRES_PASSWORD: 'password'
+    restart: always
+  redis:
+    image: redis:6-alpine
+    ports:
+      - "12345:6379"
+    volumes:
+      - ./tmp/redis_datas:/data
+    command: redis-server
