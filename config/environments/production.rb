@@ -1,7 +1,7 @@
 require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
-  config.hosts << 'rails-production-b73c.up.railway.app'
+  config.hosts << ENV.fetch('HOST', nil)
 
   # Settings specified here will take precedence over those in config/application.rb.
 
