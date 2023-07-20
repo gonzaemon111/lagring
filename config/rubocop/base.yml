@@ -1,0 +1,101 @@
+Style/Documentation:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/AsciiComments:
+  Enabled: false
+Metrics/BlockLength:
+  Exclude:
+    - Gemfile
+    - config/**/*
+    - spec/**/*
+    - lib/tasks/**/*
+    - app/models/concerns/**/*
+Metrics/AbcSize:
+  Max: 40
+  Exclude:
+    - app/workers/**/*
+    - app/operators/**/*
+    - app/forms/**/*
+    - app/controllers/admin/otps_controller.rb
+Metrics/MethodLength:
+  CountComments: false # count full line comments?
+  Max: 25
+  Exclude:
+    - app/operators/**/*
+    - app/services/**/*
+    - app/workers/**/*
+    - app/helpers/**/*
+    - app/forms/**/*
+    - app/components/cms/layouts/project_page_header_component.rb
+    - app/components/cms/layouts/page_header_component.rb
+    - app/controllers/admin/analysis/users_controller.rb
+# 分岐の数。ガード句を多用しているとデフォルト 7 だと厳しい
+Metrics/PerceivedComplexity:
+  Max: 25
+Metrics/CyclomaticComplexity:
+  Max: 25
+Style/GuardClause:
+  MinBodyLength: 5
+Lint/DuplicateMethods:
+  Exclude:
+    - app/policies/cms/application_policy.rb
+Lint/MissingSuper:
+  Exclude:
+    - app/services/**/*
+    - app/operators/**/*
+    - app/components/**/*
+Style/SymbolProc:
+  Exclude:
+    - app/mailers/**/*
+Style/StringLiterals:
+  Exclude:
+    - app/models/utils/style.rb
+Style/StringConcatenation:
+  Exclude:
+    - app/models/utils/style.rb
+Style/RedundantConstantBase:
+  Enabled: false
+Layout/SpaceBeforeComment:
+  Exclude:
+    - app/mailers/**/*
+Style/RedundantInterpolation:
+  Exclude:
+    - app/helpers/cms/application_helper.rb
+Layout/LineLength:
+  Max: 190
+  Exclude:
+    - "lib/tasks/**/*"
+    - "app/form_builders/**/*"
+Lint/AssignmentInCondition:
+  Exclude:
+    - app/services/**/*
+    - app/operators/**/*
+Lint/UselessAssignment:
+  Exclude:
+    - app/validators/**/*
+
+Naming/PredicateName:
+  Exclude:
+    - app/models/intervention_report.rb
+Naming/MemoizedInstanceVariableName:
+  Exclude:
+    - app/controllers/cms/patients_controller.rb
+Metrics/ClassLength:
+  Exclude:
+    - app/controllers/**/*
+    - app/models/**/*
+Metrics/ParameterLists:
+  Exclude:
+    - app/services/**/*
+    - app/workers/**/*
+    - app/components/cms/layouts/project_page_header_component.rb
+    - app/components/cms/layouts/page_header_component.rb
+
+Style/IfUnlessModifier:
+  Exclude:
+    - app/forms/**/*
+
+Naming/VariableNumber:
+  Exclude:
+    - spec/**/*
