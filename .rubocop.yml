@@ -1,0 +1,23 @@
+require:
+  - rubocop-rails
+  - rubocop-performance
+  - rubocop-rspec
+inherit_from:
+  - config/rubocop/base.yml
+  - config/rubocop/rails.yml
+  - config/rubocop/rspec.yml
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.3
+  Exclude:
+    - "app/frontend/**/*"
+    - "app/views/**/*"
+    - "bin/**/*"
+    - "db/**/*"
+    - "node_modules/**/*"
+    - "spec/factories/**/*"
+    - "spec/spec_helper.rb"
+    - "spec/rails_helper.rb"
+    - "vendor/**/*"
+    - "docs/**/*"
+    - "lib/tasks/dev/create_tailwind_color.rake"
