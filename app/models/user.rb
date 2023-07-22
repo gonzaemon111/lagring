@@ -9,6 +9,7 @@
 #  updated_at           :datetime         not null
 #
 class User < ApplicationRecord
+  has_many :domains, class_name: '::Domain', dependent: :destroy
   validates :provider, presence: true
   validates :name, presence: true
 end

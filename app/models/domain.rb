@@ -22,7 +22,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Domain < ApplicationRecord
-  belongs_to :user, class_name: '::User'
+  belongs_to :user
 
   validates :provider, presence: true
   validates :name, presence: true

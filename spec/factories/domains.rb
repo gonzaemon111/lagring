@@ -23,7 +23,7 @@
 #
 FactoryBot.define do
   factory :domain, class: ::Domain do
-    user { nil }
+    association :user
     name { 'gonzaemon' }
     provider { 'Github' }
     next_updated_at { '2023-07-16 23:03:42' }

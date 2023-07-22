@@ -2,12 +2,12 @@ require 'spec_helper'
 ENV['RAILS_ENV'] = 'test'
 require_relative '../config/environment'
 # Prevent database truncation if the environment is production
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
 require 'faker'
 require 'shoulda/matchers'
-require 'database_cleaner'
-require 'yaml'
+# require 'database_cleaner'
+# require 'yaml'
 
 Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
 
@@ -24,7 +24,8 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   config.include FactoryBot::Syntax::Methods
   config.include ActiveJob::TestHelper
-  config.include ViewComponent::TestHelpers, type: :component
+
+  config.use_transactional_fixtures = true
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
@@ -35,19 +36,6 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     ::Rails.application.load_tasks
-    # DatabaseCleaner.clean_with(:truncation, { except: YAML.load_file('config/excludes_tenant_model.yml')['excludes'].map(&:underscore).map(&:pluralize) })
-  end
-
-  # unless ENV.fetch('CI_ENV', 0).to_i.zero?
-  #   config.before(:suite) do
-  #     SeedFu.seed
-  #   end
-  # end
-
-  config.around(:each) do |example|
-    DatabaseCleaner.cleaning { example.run }
-    # NOTE: publicなテナントに戻る
-    # Apartment::Tenant.reset
   end
 end
 
