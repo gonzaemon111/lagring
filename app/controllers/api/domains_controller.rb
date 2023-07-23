@@ -1,9 +1,9 @@
 module Api
-  class DomainsController < ApplicationController
+  class DomainsController < ::Api::ApplicationController
     before_action :raise_error_if_not_found, only: %i[show update destroy]
 
     def index
-      @domains = Domain.order(:updated_at)
+      @domains = current_user.domains.order(:updated_at)
       render json: { domains: @domains }, status: :ok
     end
 
@@ -12,7 +12,7 @@ module Api
     end
 
     def create
-      @domain = Domain.new(params[:domain])
+      @domain = current_user.domains.new(domain_params)
       if @domain.save
         render json: @domain, status: :created
       else
@@ -39,7 +39,7 @@ module Api
     private
 
     def domain
-      @domain ||= Domain.find_by(id: params[:id])
+      @domain ||= current_user.domains.find_by(id: params[:id])
     end
     helper_method :domain
 
@@ -50,8 +50,7 @@ module Api
         :is_canceled,
         :memo,
         :next_updated_at,
-        :provider,
-        :user_id
+        :provider
       )
     end
 
