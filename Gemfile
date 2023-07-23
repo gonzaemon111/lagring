@@ -8,6 +8,7 @@ gem 'bootsnap', require: false
 gem 'dotenv-rails'
 gem 'importmap-rails'
 gem 'jbuilder'
+gem 'jwt'
 gem 'kredis'
 gem 'pg'
 gem 'puma', '~> 6.0'
