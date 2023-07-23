@@ -84,3 +84,6 @@ RSpec/Rails/InferredSpecType:
 
 RSpec/FilePath:
   Enabled: false
+
+RSpec/MessageSpies:
+  Enabled: false

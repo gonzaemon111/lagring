@@ -19,7 +19,7 @@ RSpec.describe Api::UsersController, type: :request do
     end
 
     context '異常系 404' do
-      let!(:user_id) { 100_000_000 }
+      let(:user_id) { 100_000_000 }
 
       it 'Response NotFound' do
         subject
@@ -36,23 +36,37 @@ RSpec.describe Api::UsersController, type: :request do
     subject { post api_users_path, params: }
 
     let(:params) do
-      { user: { name: 'テスト', provider: 'Github' } }
+      { user: { name: 'テスト', provider: 'Github', email: } }
     end
+    context '正常系 200' do
+      context 'すでにユーザーが存在する場合' do
+        before { create(:user, email:) }
 
-    context '正常系 201' do
-      it 'Response Created' do
-        subject
-        expect(response).to have_http_status(:created)
-        expect(response.parsed_body).to be_a(::Hash)
-        expect(response.parsed_body['id']).to be_a(::Integer)
-        expect(response.parsed_body['name']).to eq('テスト')
-        expect(response.parsed_body['provider']).to eq('Github')
+        let(:email) { 'test@test.com' }
+
+        it 'Response OK' do
+          subject
+          expect(response).to have_http_status(:ok)
+          expect(response.parsed_body).to be_a(::Hash)
+          expect(response.parsed_body['token']).to be_a(::String)
+        end
+      end
+
+      context 'ユーザーが存在しない場合' do
+        let(:email) { ::Faker::Internet.email }
+
+        it 'Response OK' do
+          subject
+          expect(response).to have_http_status(:ok)
+          expect(response.parsed_body).to be_a(::Hash)
+          expect(response.parsed_body['token']).to be_a(::String)
+        end
       end
     end
 
     context '異常系 400' do
       let(:params) do
-        { user: { name: nil, provider: 'Github' } }
+        { user: { name: nil, provider: 'Github', email: ::Faker::Internet.email } }
       end
 
       it 'Response BadRequest' do
