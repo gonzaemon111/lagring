@@ -42,6 +42,7 @@ ja:
     models:
       user: ユーザー
       domain: ドメイン
+      task: タスク
     attributes:
       user:
         name: 名前
@@ -53,6 +54,15 @@ ja:
         next_updated_at: 更新予定日
         account_name: アカウント名
         provider: プロバイダー
+        memo: メモ
+      task:
+        user_id: ユーザー
+        name: タスク名
+        category_name: カテゴリ名
+        finished_at: 終了日時
+        account_name: アカウント名
+        deadline: 締切
+        memo: メモ
   attributes:
     id: ID
     identifier: 識別子

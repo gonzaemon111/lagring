@@ -1,0 +1,9 @@
+test:
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: lagring
+  password: password
+  host: 0.0.0.0
+  port: 5432
+  database: lagring_test

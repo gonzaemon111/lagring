@@ -1,0 +1,70 @@
+name: PullRequest Test
+on:
+  pull_request:
+
+env:
+  RAILS_MASTER_KEY: ${{secrets.RAILS_MASTER_KEY}}
+  TZ: 'Asia/Tokyo'
+
+jobs:
+  rspec:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    services:
+      postgres:
+        image: postgres:15
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: lagring
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: lagring_test
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        env:
+          REDIS_HOST: redis
+          REDIS_PORT: 6379
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          ruby-version: 3.2.2
+
+      - name: Copy files
+        run: |
+          cp ci.env .env && cp config/database.ci.yml config/database.yml
+
+      - name: Bundler and Gem install
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3 --path vendor/bundle
+
+      - name: Run Rubocop
+        run: bundle exec rubocop -c .rubocop.yml
+
+      - name: Database create and migrate
+        run: bundle exec rails db:create db:migrate RAILS_ENV=test
+
+      - name: Run RSpec
+        run: bundle exec rspec spec/.
+
+      # - name: Add code coverage comment
+      #   uses: romeovs/lcov-reporter-action@v0.2.16
+      #   with:
+      #     lcov-file: coverage/lcov.info
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}

@@ -12,7 +12,10 @@ module Api
     end
 
     def create
+      raise ::InvalidParametersError unless params[:domain].present?
+
       @domain = current_user.domains.new(domain_params)
+
       if @domain.save
         render json: @domain, status: :created
       else
@@ -21,8 +24,10 @@ module Api
     end
 
     def update
+      raise ::InvalidParametersError unless params[:domain].present?
+
       if domain.update(domain_params)
-        render json: {}, status: :no_content
+        render json: domain, status: :ok
       else
         render json: ::ErrorForm.new(object: domain).format, status: :bad_request
       end
@@ -30,7 +35,7 @@ module Api
 
     def destroy
       if domain.destroy
-        render json: {}, status: :no_content
+        render json: domain, status: :ok
       else
         render json: ::ErrorForm.new(object: domain).format, status: :bad_request
       end
