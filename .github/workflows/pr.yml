@@ -3,7 +3,8 @@ on:
   pull_request:
 
 env:
-  CI_ENV: 1
+  RAILS_MASTER_KEY: ${{secrets.RAILS_MASTER_KEY}}
+  TZ: 'Asia/Tokyo'
 
 jobs:
   rspec:
