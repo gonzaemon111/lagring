@@ -16,7 +16,7 @@ jobs:
         ports:
           - 5432:5432
         env:
-          POSTGRES_USER: githubaction
+          POSTGRES_USER: lagring
           POSTGRES_PASSWORD: password
           POSTGRES_DB: lagring_test
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
@@ -57,9 +57,7 @@ jobs:
         run: bundle exec rubocop -c .rubocop.yml
 
       - name: Database create and migrate
-        run: |
-          cp config/database.ci.yml config/database.yml
-          bundle exec rails db:create db:migrate RAILS_ENV=test
+        run: bundle exec rails db:create db:migrate RAILS_ENV=test
 
       - name: Run RSpec
         run: bundle exec rspec spec/.
