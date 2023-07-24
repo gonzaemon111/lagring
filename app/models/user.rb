@@ -16,6 +16,8 @@
 #
 class User < ApplicationRecord
   has_many :domains, class_name: '::Domain', dependent: :destroy
+  has_many :tasks, class_name: '::Task', dependent: :destroy
+
   validates :provider, presence: true
   validates :name, presence: true
 
