@@ -32,5 +32,6 @@ RSpec.describe User, type: :model do
   context 'When Association' do
     it { is_expected.to have_many(:domains).dependent(:destroy).class_name('::Domain') }
     it { is_expected.to have_many(:tasks).dependent(:destroy).class_name('::Task') }
+    it { is_expected.to have_many(:daily_necessities).dependent(:destroy).class_name('::DailyNecessity') }
   end
 end

@@ -87,3 +87,8 @@ RSpec/FilePath:
 
 RSpec/MessageSpies:
   Enabled: false
+
+RSpec/ExpectActual:
+  Enabled: true
+  Exclude:
+    - spec/routes/**/*

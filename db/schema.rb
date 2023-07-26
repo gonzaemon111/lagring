@@ -10,9 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_22_075613) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_26_123624) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "daily_necessities", comment: "日用品", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "ユーザー"
+    t.string "name", null: false, comment: "名前"
+    t.integer "quantity", default: 0, null: false, comment: "個数"
+    t.string "image_url", comment: "画像URL"
+    t.text "memo", comment: "メモ"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_daily_necessities_on_user_id"
+  end
 
   create_table "domains", comment: "ドメイン", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザーID"
@@ -49,6 +60,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_22_075613) do
     t.index ["provider", "email"], name: "index_users_on_provider_and_email", unique: true
   end
 
+  add_foreign_key "daily_necessities", "users"
   add_foreign_key "domains", "users"
   add_foreign_key "tasks", "users"
 end
