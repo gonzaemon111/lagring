@@ -6,6 +6,7 @@ ruby '3.2.2'
 gem 'bcrypt', '~> 3.1.7'
 gem 'bootsnap', require: false
 gem 'dotenv-rails'
+gem 'enumerize'
 gem 'importmap-rails'
 gem 'jbuilder'
 gem 'jwt'
