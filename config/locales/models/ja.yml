@@ -44,6 +44,7 @@ ja:
       domain: ドメイン
       task: タスク
       daily_necessity: 日用品
+      checklist: チェックリスト
     attributes:
       user:
         name: 名前
@@ -69,6 +70,12 @@ ja:
         name: 品名
         quantity: 個数
         image_url: 画像URL
+        memo: メモ
+      checklist:
+        user_id: ユーザー
+        name: チェック名
+        date: 開始日時
+        repeat_frequency: 繰り返すし頻度
         memo: メモ
   attributes:
     id: ID
