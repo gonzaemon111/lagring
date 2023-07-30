@@ -10,9 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_26_123624) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_29_085237) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "checklists", comment: "チェック", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "ユーザー"
+    t.string "name", comment: "チェック名"
+    t.date "date", comment: "日付"
+    t.string "repeat_frequency", comment: "繰り返し頻度"
+    t.text "memo", comment: "メモ"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_checklists_on_user_id"
+  end
 
   create_table "daily_necessities", comment: "日用品", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザー"
@@ -60,6 +71,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_26_123624) do
     t.index ["provider", "email"], name: "index_users_on_provider_and_email", unique: true
   end
 
+  add_foreign_key "checklists", "users"
   add_foreign_key "daily_necessities", "users"
   add_foreign_key "domains", "users"
   add_foreign_key "tasks", "users"
