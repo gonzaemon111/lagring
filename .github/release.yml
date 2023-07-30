@@ -1,0 +1,51 @@
+changelog:
+  exclude:
+    labels:
+      - ignore-for-release
+    authors:
+      - octocat
+      - snyk-bot
+      - github-actions
+  categories:
+    - title: 🎁 ライブラリアップデート
+      labels:
+        - 🎁 ライブラリアップデート
+    - title: 🚀 開発効率化
+      labels:
+        - 🚀 開発効率化
+    - title: 🔥 パフォーマンス改善
+      labels:
+        - 🔥 パフォーマンス改善
+    - title: 🛠 バグ修正
+      labels:
+        - 🛠 バグ修正
+    - title: 👮 セキュリティ
+      labels:
+        - 👮 セキュリティ
+    - title: 🌱 軽微な修正
+      labels:
+        - 🌱 軽微な修正
+    - title: 📚 ドキュメント整備
+      labels:
+        - 📚 ドキュメント整備
+    - title: 👕 コーディングスタイル
+      labels:
+        - 👕 コーディングスタイル
+    - title: 🗑️ 重複・削除
+      labels:
+        - 🗑️ 重複・削除
+    - title: 🔧 ツール
+      labels:
+        - tool
+    - title: 🎨 デザインUI/UX
+      labels:
+        - 🎨 デザインUI/UX
+    - title: 🌏 インフラ
+      labels:
+        - 🌏 インフラ
+    - title: ⚡️ リファクタリング
+      labels:
+        - ⚡️ リファクタリング
+    - title: 🎉 新機能
+      labels:
+        - '*'
