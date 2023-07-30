@@ -36,6 +36,7 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     ::Rails.application.load_tasks
+    I18n.default_locale = :ja
   end
 end
 
