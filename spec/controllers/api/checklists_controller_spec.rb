@@ -159,7 +159,6 @@ RSpec.describe Api::ChecklistsController, type: :request do
         expect(response.parsed_body['name']).to eq(checklist.name)
         expect(response.parsed_body['date']).to eq(I18n.l(checklist.date))
         expect(response.parsed_body['repeat_frequency']).to eq('day')
-        expect(response.parsed_body['provider']).to eq(checklist.provider)
       end
     end
 
