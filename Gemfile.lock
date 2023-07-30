@@ -92,6 +92,8 @@ GEM
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
       railties (>= 3.2)
+    enumerize (2.6.1)
+      activesupport (>= 3.2)
     erubi (1.12.0)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
@@ -334,6 +336,7 @@ DEPENDENCIES
   bullet
   byebug
   dotenv-rails
+  enumerize
   factory_bot_rails
   faker
   importmap-rails

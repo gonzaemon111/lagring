@@ -18,6 +18,7 @@ class User < ApplicationRecord
   has_many :domains, class_name: '::Domain', dependent: :destroy
   has_many :tasks, class_name: '::Task', dependent: :destroy
   has_many :daily_necessities, class_name: '::DailyNecessity', dependent: :destroy
+  has_many :checklists, class_name: '::Checklist', dependent: :destroy
 
   validates :provider, presence: true
   validates :name, presence: true
