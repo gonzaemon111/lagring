@@ -45,6 +45,7 @@ ja:
       task: タスク
       daily_necessity: 日用品
       checklist: チェックリスト
+      subscription: サブスクリプション
     attributes:
       user:
         name: 名前
@@ -75,6 +76,14 @@ ja:
         user_id: ユーザー
         name: チェック名
         date: 開始日時
+        repeat_frequency: 繰り返すし頻度
+        memo: メモ
+      subscription:
+        user_id: ユーザー
+        name: サブスクリプション名
+        started_at: 開始日時
+        finished_at: 終了日時
+        image_url: 画像URL
         repeat_frequency: 繰り返すし頻度
         memo: メモ
   attributes:
