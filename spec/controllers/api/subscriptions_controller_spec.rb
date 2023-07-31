@@ -1,25 +1,27 @@
-RSpec.describe Api::ChecklistsController, type: :request do
+RSpec.describe Api::SubscriptionsController, type: :request do
   let(:user) { create(:user) }
   let(:headers) { { 'Content-Type': 'application/json', Authorization: "Bearer #{token}" } }
   let(:token) { ::Users::GenerateTokenOperator.process(user:) }
 
   before { token }
 
-  describe 'GET index /api/checklists' do
-    subject { get api_checklists_path, headers: }
+  describe 'GET index /api/subscriptions' do
+    subject { get api_subscriptions_path, headers: }
 
     context '正常系 200' do
-      before { create(:checklist, user:) }
+      before { create(:subscription, user:) }
 
       it 'Response OK' do
         subject
         expect(response).to have_http_status(:ok)
         expect(response.parsed_body).to be_a(::Hash)
-        expect(response.parsed_body['checklists'].size).to eq(user.checklists.size)
-        expect(response.parsed_body['checklists'][0]['name']).to eq(user.checklists.first.name)
-        expect(response.parsed_body['checklists'][0]['date']).to eq(I18n.l(user.checklists.first.date, locale: :ja))
-        expect(response.parsed_body['checklists'][0]['repeat_frequency']).to eq(user.checklists.first.repeat_frequency)
-        expect(response.parsed_body['checklists'][0]['memo']).to eq(user.checklists.first.memo)
+        expect(response.parsed_body['subscriptions'].size).to eq(user.subscriptions.size)
+        expect(response.parsed_body['subscriptions'][0]['name']).to eq(user.subscriptions.first.name)
+        expect(response.parsed_body['subscriptions'][0]['started_at']).to eq(I18n.l(user.subscriptions.first.started_at, locale: :ja))
+        expect(response.parsed_body['subscriptions'][0]['finished_at']).to eq(I18n.l(user.subscriptions.first.finished_at, locale: :ja))
+        expect(response.parsed_body['subscriptions'][0]['repeat_frequency']).to eq(user.subscriptions.first.repeat_frequency)
+        expect(response.parsed_body['subscriptions'][0]['price']).to eq(user.subscriptions.first.price)
+        expect(response.parsed_body['subscriptions'][0]['memo']).to eq(user.subscriptions.first.memo)
       end
     end
 
@@ -39,27 +41,29 @@ RSpec.describe Api::ChecklistsController, type: :request do
     end
   end
 
-  describe 'GET show /api/checklists/1' do
-    subject { get api_checklist_path(checklist_id), headers: }
+  describe 'GET show /api/subscriptions/1' do
+    subject { get api_subscription_path(subscription_id), headers: }
 
-    let(:checklist) { create(:checklist, user:) }
-    let(:checklist_id) { checklist.id }
+    let(:subscription) { create(:subscription, user:) }
+    let(:subscription_id) { subscription.id }
 
     context '正常系 200' do
       it 'Response OK' do
         subject
         expect(response).to have_http_status(:ok)
         expect(response.parsed_body).to be_a(::Hash)
-        expect(response.parsed_body['name']).to eq(user.checklists.first.name)
-        expect(response.parsed_body['date']).to eq(I18n.l(user.checklists.first.date))
-        expect(response.parsed_body['repeat_frequency']).to eq(user.checklists.first.repeat_frequency)
-        expect(response.parsed_body['memo']).to eq(user.checklists.first.memo)
+        expect(response.parsed_body['name']).to eq(user.subscriptions.first.name)
+        expect(response.parsed_body['started_at']).to eq(I18n.l(user.subscriptions.first.started_at))
+        expect(response.parsed_body['finished_at']).to eq(I18n.l(user.subscriptions.first.finished_at))
+        expect(response.parsed_body['repeat_frequency']).to eq(user.subscriptions.first.repeat_frequency)
+        expect(response.parsed_body['price']).to eq(user.subscriptions.first.price)
+        expect(response.parsed_body['memo']).to eq(user.subscriptions.first.memo)
       end
     end
 
     context '異常系' do
       context 'IDが存在しない場合' do
-        let(:checklist_id) { 200_000_000 }
+        let(:subscription_id) { 200_000_000 }
 
         it 'Response NotFound' do
           subject
@@ -86,15 +90,17 @@ RSpec.describe Api::ChecklistsController, type: :request do
     end
   end
 
-  describe 'POST create /api/checklists' do
-    subject { post api_checklists_path, headers:, params: }
+  describe 'POST create /api/subscriptions' do
+    subject { post api_subscriptions_path, headers:, params: }
 
     let(:params) do
       {
-        checklist: {
+        subscription: {
           name:,
-          date: '2023/08/01',
-          repeat_frequency: 'none',
+          started_at: '2023/07/01 23:03:42',
+          finished_at: '2023/08/01',
+          repeat_frequency: 'month',
+          price: 990,
           memo: 'メモ'
         }
       }.to_json
@@ -107,8 +113,10 @@ RSpec.describe Api::ChecklistsController, type: :request do
         expect(response).to have_http_status(:created)
         expect(response.parsed_body).to be_a(::Hash)
         expect(response.parsed_body['name']).to eq('買い物')
-        expect(response.parsed_body['date']).to eq('2023/08/01')
-        expect(response.parsed_body['repeat_frequency']).to eq('none')
+        expect(response.parsed_body['started_at']).to eq('2023/07/01 23:03:42')
+        expect(response.parsed_body['finished_at']).to eq('2023/08/01 00:00:00')
+        expect(response.parsed_body['repeat_frequency']).to eq('month')
+        expect(response.parsed_body['price']).to eq(990)
         expect(response.parsed_body['memo']).to eq('メモ')
       end
     end
@@ -122,7 +130,7 @@ RSpec.describe Api::ChecklistsController, type: :request do
           expect(response).to have_http_status(:bad_request)
           expect(response.parsed_body).to be_a(::Hash)
           expect(response.parsed_body['code']).to eq(400)
-          expect(response.parsed_body['messages']).to eq(['チェック名を入力してください。'])
+          expect(response.parsed_body['messages']).to eq(['サブスクリプション名を入力してください。'])
         end
       end
 
@@ -141,13 +149,13 @@ RSpec.describe Api::ChecklistsController, type: :request do
     end
   end
 
-  describe 'PUT update /api/checklists/1' do
-    subject { put api_checklist_path(checklist_id), headers:, params: }
+  describe 'PUT upfinished_at /api/subscriptions/1' do
+    subject { put api_subscription_path(subscription_id), headers:, params: }
 
-    let(:checklist) { create(:checklist, user:) }
-    let(:checklist_id) { checklist.id }
+    let(:subscription) { create(:subscription, user:) }
+    let(:subscription_id) { subscription.id }
     let(:params) do
-      { checklist: { repeat_frequency: 'day' } }.to_json
+      { subscription: { repeat_frequency: 'week' } }.to_json
     end
 
     context '正常系 200' do
@@ -155,15 +163,18 @@ RSpec.describe Api::ChecklistsController, type: :request do
         subject
         expect(response).to have_http_status(:ok)
         expect(response.parsed_body).to be_a(::Hash)
-        expect(response.parsed_body['name']).to eq(checklist.name)
-        expect(response.parsed_body['date']).to eq(I18n.l(checklist.date))
-        expect(response.parsed_body['repeat_frequency']).to eq('day')
+        expect(response.parsed_body['name']).to eq(subscription.name)
+        expect(response.parsed_body['memo']).to eq(subscription.memo)
+        expect(response.parsed_body['price']).to eq(subscription.price)
+        expect(response.parsed_body['started_at']).to eq(I18n.l(subscription.started_at))
+        expect(response.parsed_body['finished_at']).to eq(I18n.l(subscription.finished_at))
+        expect(response.parsed_body['repeat_frequency']).to eq('week')
       end
     end
 
     context '異常系' do
       context 'IDが存在しない場合' do
-        let(:checklist_id) { 400_000_000 }
+        let(:subscription_id) { 400_000_000 }
 
         it 'Response NotFound' do
           subject
@@ -176,7 +187,7 @@ RSpec.describe Api::ChecklistsController, type: :request do
       end
 
       context 'パラメータが不正な時' do
-        let(:params) { { checklist: {} }.to_json }
+        let(:params) { { subscription: {} }.to_json }
 
         it 'Response BadRequest' do
           subject
@@ -202,26 +213,29 @@ RSpec.describe Api::ChecklistsController, type: :request do
     end
   end
 
-  describe 'DELETE destroy /api/checklists/1' do
-    subject { delete api_checklist_path(checklist_id), headers: }
+  describe 'DELETE destroy /api/subscriptions/1' do
+    subject { delete api_subscription_path(subscription_id), headers: }
 
-    let(:checklist) { create(:checklist, user:) }
-    let(:checklist_id) { checklist.id }
+    let(:subscription) { create(:subscription, user:) }
+    let(:subscription_id) { subscription.id }
 
     context '正常系 200' do
       it 'Response OK' do
         subject
         expect(response).to have_http_status(:ok)
         expect(response.parsed_body).to be_a(::Hash)
-        expect(response.parsed_body['name']).to eq(checklist.name)
-        expect(response.parsed_body['date']).to eq(I18n.l(checklist.date))
-        expect(response.parsed_body['repeat_frequency']).to eq(checklist.repeat_frequency)
+        expect(response.parsed_body['name']).to eq(subscription.name)
+        expect(response.parsed_body['price']).to eq(subscription.price)
+        expect(response.parsed_body['memo']).to eq(subscription.memo)
+        expect(response.parsed_body['started_at']).to eq(I18n.l(subscription.started_at))
+        expect(response.parsed_body['finished_at']).to eq(I18n.l(subscription.finished_at))
+        expect(response.parsed_body['repeat_frequency']).to eq(subscription.repeat_frequency)
       end
     end
 
     context '異常系' do
       context 'IDが存在しない場合' do
-        let(:checklist_id) { 300_000_000 }
+        let(:subscription_id) { 300_000_000 }
 
         it 'Response NotFound' do
           subject
