@@ -25,11 +25,12 @@
 FactoryBot.define do
   factory :subscription, class: ::Subscription do
     association :user
-    name { 'gonzaemon' }
-    provider { 'Github' }
-    next_updated_at { '2023-07-16 23:03:42' }
-    account_name { 'Gonzaemon111' }
-    is_canceled { false }
+    name { 'Netflix' }
+    price { 990 }
+    repeat_frequency { 'month' }
+    started_at { '2022-07-01 23:03:42' }
+    finished_at { '2023-08-01 23:03:42' }
+    image_url { 'https://images.ctfassets.net/4cd45et68cgf/Rx83JoRDMkYNlMC9MKzcB/2b14d5a59fc3937afd3f03191e19502d/Netflix-Symbol.png?w=700&h=456' }
     memo { 'メモ' }
   end
 end
