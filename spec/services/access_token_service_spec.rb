@@ -8,8 +8,7 @@ RSpec.describe AccessTokenService do
 
   before do
     # Rails.application.credentialsをモックしてテスト用のsecret_keyとalgorithmを設定します
-    allow(::Rails.application.credentials).to receive(:secret_key_base).and_return(secret_key)
-    allow(::Rails.application.credentials).to receive(:jwt_algorithm).and_return(algorithm)
+    allow(::Rails.application.credentials).to receive_messages(secret_key_base: secret_key, jwt_algorithm: algorithm)
   end
 
   describe '#generate_token' do
