@@ -14,6 +14,25 @@
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'rails_helper'
+require 'simplecov'
+
+SimpleCov.start do
+  add_filter '/test/' # testを含むファイルが計測対象から除外される
+  add_filter '/bin/'
+  add_filter '/config/'
+  add_filter '/db/'
+  add_filter '/lib/'
+  add_filter '/log/'
+  add_filter '/public/'
+  add_filter '/tmp/'
+  add_filter '/storage/'
+  add_filter '/vendor/'
+
+  add_group 'Models', 'app/models' # add_group "グループ化名", "グループ化したいパス"
+  add_group 'Controllers', 'app/controllers'
+  add_group 'Services', 'app/services'
+  add_group 'Operators', 'app/operators'
+end
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
