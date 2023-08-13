@@ -9,5 +9,7 @@ Rails.application.routes.draw do
   end
 
   get 'health', to: 'health#check'
+  get '*not_found', to: 'application#routing_error'
+
   root 'health#check'
 end
