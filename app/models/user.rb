@@ -20,6 +20,7 @@ class User < ApplicationRecord
   has_many :daily_necessities, class_name: '::DailyNecessity', dependent: :destroy
   has_many :checklists, class_name: '::Checklist', dependent: :destroy
   has_many :subscriptions, class_name: '::Subscription', dependent: :destroy
+  has_many :shoppings, class_name: '::Shopping', dependent: :destroy
 
   validates :provider, presence: true
   validates :name, presence: true

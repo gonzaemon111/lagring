@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resources :daily_necessities, only: %i[index show create destroy update]
     resources :checklists, only: %i[index show create destroy update], defaults: { format: :json }
     resources :subscriptions, only: %i[index show create destroy update], defaults: { format: :json }
+    resources :shoppings, only: %i[index show create destroy update], defaults: { format: :json }
   end
 
   get 'health', to: 'health#check'
