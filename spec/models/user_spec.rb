@@ -35,5 +35,6 @@ RSpec.describe User, type: :model do
     it { is_expected.to have_many(:daily_necessities).dependent(:destroy).class_name('::DailyNecessity') }
     it { is_expected.to have_many(:checklists).dependent(:destroy).class_name('::Checklist') }
     it { is_expected.to have_many(:subscriptions).dependent(:destroy).class_name('::Subscription') }
+    it { is_expected.to have_many(:shoppings).dependent(:destroy).class_name('::Shopping') }
   end
 end

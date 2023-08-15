@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_30_155734) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_14_233334) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -47,6 +47,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_30_155734) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_domains_on_user_id"
+  end
+
+  create_table "shoppings", comment: "買い物", force: :cascade do |t|
+    t.string "name", limit: 255, default: "", null: false, comment: "買うもの"
+    t.text "memo", comment: "メモ"
+    t.string "url", comment: "URL"
+    t.string "image_url", comment: "画像URL"
+    t.bigint "user_id", null: false, comment: "ユーザー"
+    t.string "shop", comment: "店"
+    t.integer "price", default: 0, null: false, comment: "金額"
+    t.boolean "is_bought", default: false, null: false, comment: "買ったかどうか"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_shoppings_on_user_id"
   end
 
   create_table "subscriptions", comment: "サブスクリプション", force: :cascade do |t|
@@ -88,6 +102,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_30_155734) do
   add_foreign_key "checklists", "users"
   add_foreign_key "daily_necessities", "users"
   add_foreign_key "domains", "users"
+  add_foreign_key "shoppings", "users"
   add_foreign_key "subscriptions", "users"
   add_foreign_key "tasks", "users"
 end
