@@ -49,5 +49,6 @@ group :test do
   gem 'rspec_junit_formatter'
   gem 'rspec-rails'
   gem 'simplecov', require: false
+  gem 'simplecov-lcov', require: false
   gem 'webdrivers'
 end
