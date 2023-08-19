@@ -14,24 +14,31 @@
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'rails_helper'
-require 'simplecov'
+if Rails.env.test?
+  require 'simplecov'
+  require 'simplecov-lcov'
+  SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
+  SimpleCov::Formatter::LcovFormatter.config do |c|
+    c.single_report_path = 'coverage/lcov.info'
+  end
+  SimpleCov.formatter = SimpleCov::Formatter::LcovFormatter
+  SimpleCov.start do
+    add_filter '/test/' # testを含むファイルが計測対象から除外される
+    add_filter '/bin/'
+    add_filter '/config/'
+    add_filter '/db/'
+    add_filter '/lib/'
+    add_filter '/log/'
+    add_filter '/public/'
+    add_filter '/tmp/'
+    add_filter '/storage/'
+    add_filter '/vendor/'
 
-SimpleCov.start do
-  add_filter '/test/' # testを含むファイルが計測対象から除外される
-  add_filter '/bin/'
-  add_filter '/config/'
-  add_filter '/db/'
-  add_filter '/lib/'
-  add_filter '/log/'
-  add_filter '/public/'
-  add_filter '/tmp/'
-  add_filter '/storage/'
-  add_filter '/vendor/'
-
-  add_group 'Models', 'app/models' # add_group "グループ化名", "グループ化したいパス"
-  add_group 'Controllers', 'app/controllers'
-  add_group 'Services', 'app/services'
-  add_group 'Operators', 'app/operators'
+    add_group 'Models', 'app/models' # add_group "グループ化名", "グループ化したいパス"
+    add_group 'Controllers', 'app/controllers'
+    add_group 'Services', 'app/services'
+    add_group 'Operators', 'app/operators'
+  end
 end
 
 RSpec.configure do |config|
