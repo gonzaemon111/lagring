@@ -117,7 +117,7 @@ RSpec.describe Api::ShoppingsController, type: :request do
         expect(response.parsed_body['name']).to eq('ティッシュ')
         expect(response.parsed_body['url']).to eq('https://amzn.asia/d/d3I41Ej')
         expect(response.parsed_body['image_url']).to eq('https://m.media-amazon.com/images/I/71j+nzsS4DS._AC_SX679_.jpg')
-        expect(response.parsed_body['is_bought']).to eq(false)
+        expect(response.parsed_body['is_bought']).to be(false)
         expect(response.parsed_body['shop']).to eq('Amazon')
         expect(response.parsed_body['price']).to eq(990)
         expect(response.parsed_body['memo']).to eq('メモ')
@@ -172,7 +172,7 @@ RSpec.describe Api::ShoppingsController, type: :request do
         expect(response.parsed_body['url']).to eq(shopping.url)
         expect(response.parsed_body['image_url']).to eq(shopping.image_url)
         expect(response.parsed_body['shop']).to eq(shopping.shop)
-        expect(response.parsed_body['is_bought']).to eq(true)
+        expect(response.parsed_body['is_bought']).to be(true)
       end
     end
 
