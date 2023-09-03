@@ -11,7 +11,6 @@ gem 'importmap-rails'
 gem 'jbuilder'
 gem 'jwt'
 gem 'kredis'
-gem 'logtail-rails'
 gem 'pg'
 gem 'puma', '~> 6.0'
 gem 'pundit'
@@ -52,4 +51,8 @@ group :test do
   gem 'simplecov', require: false
   gem 'simplecov-lcov', require: false
   gem 'webdrivers'
+end
+
+group :production do
+  gem 'logtail-rails'
 end
