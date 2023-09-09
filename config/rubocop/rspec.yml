@@ -82,7 +82,10 @@ RSpec/MultipleMemoizedHelpers:
 RSpec/Rails/InferredSpecType:
   Enabled: false
 
-RSpec/FilePath:
+RSpec/SpecFilePathFormat:
+  Enabled: true
+
+RSpec/SpecFilePathSuffix:
   Enabled: false
 
 RSpec/MessageSpies:
