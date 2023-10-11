@@ -25,7 +25,6 @@ gem 'turbo-rails'
 group :development, :test do
   gem 'annotate'
   gem 'better_errors'
-  gem 'bullet'
   gem 'byebug'
   gem 'factory_bot_rails'
   gem 'faker'
@@ -41,6 +40,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'bullet'
   gem 'rack-mini-profiler'
   gem 'web-console'
 end
